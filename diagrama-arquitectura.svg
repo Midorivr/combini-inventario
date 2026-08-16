@@ -1,0 +1,62 @@
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" font-family="Arial, sans-serif">
+  <rect width="900" height="560" fill="#0f172a"/>
+  <text x="450" y="35" text-anchor="middle" fill="#f8fafc" font-size="20" font-weight="bold">Arquitectura - API Combini Inventario</text>
+
+  <!-- Cliente -->
+  <rect x="370" y="60" width="160" height="55" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+  <text x="450" y="93" text-anchor="middle" fill="#f8fafc" font-size="14">Cliente (Browser / curl / Postman)</text>
+
+  <!-- Flecha cliente -> servidor -->
+  <line x1="450" y1="115" x2="450" y2="150" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Servidor Express -->
+  <rect x="330" y="150" width="240" height="55" rx="8" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="450" y="175" text-anchor="middle" fill="#f8fafc" font-size="14" font-weight="bold">Servidor Express</text>
+  <text x="450" y="193" text-anchor="middle" fill="#cbd5e1" font-size="11">server.js</text>
+
+  <!-- Flechas hacia rutas -->
+  <line x1="410" y1="205" x2="220" y2="255" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="450" y1="205" x2="450" y2="255" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="500" y1="205" x2="720" y2="255" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Ruta /saludar -->
+  <rect x="120" y="255" width="200" height="55" rx="8" fill="#1e293b" stroke="#facc15" stroke-width="2"/>
+  <text x="220" y="278" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="bold">GET /saludar</text>
+  <text x="220" y="296" text-anchor="middle" fill="#cbd5e1" font-size="11">routes/saludar.js</text>
+
+  <!-- Ruta /inventario -->
+  <rect x="350" y="255" width="200" height="55" rx="8" fill="#1e293b" stroke="#facc15" stroke-width="2"/>
+  <text x="450" y="278" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="bold">/inventario (CRUD)</text>
+  <text x="450" y="296" text-anchor="middle" fill="#cbd5e1" font-size="11">routes/inventario.js</text>
+
+  <!-- Manejador 404 -->
+  <rect x="620" y="255" width="200" height="55" rx="8" fill="#1e293b" stroke="#f87171" stroke-width="2"/>
+  <text x="720" y="278" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="bold">Ruta no encontrada</text>
+  <text x="720" y="296" text-anchor="middle" fill="#cbd5e1" font-size="11">404 Not Found (HTML)</text>
+
+  <!-- Flecha inventario -> controller -->
+  <line x1="450" y1="310" x2="450" y2="355" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Controller -->
+  <rect x="330" y="355" width="240" height="55" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+  <text x="450" y="378" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="bold">inventarioController.js</text>
+  <text x="450" y="396" text-anchor="middle" fill="#cbd5e1" font-size="11">Logica de negocio (CRUD)</text>
+
+  <!-- Flecha controller -> data -->
+  <line x1="450" y1="410" x2="450" y2="455" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Data store -->
+  <rect x="330" y="455" width="240" height="55" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+  <text x="450" y="478" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="bold">data/inventario.js</text>
+  <text x="450" y="496" text-anchor="middle" fill="#cbd5e1" font-size="11">Almacen en memoria (productos)</text>
+
+  <!-- Respuestas de vuelta -->
+  <text x="220" y="330" text-anchor="middle" fill="#94a3b8" font-size="10">200 OK + JSON</text>
+  <text x="720" y="330" text-anchor="middle" fill="#94a3b8" font-size="10">404 + HTML</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+</svg>

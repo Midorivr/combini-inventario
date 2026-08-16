@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hikari Market — Inventario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FBF2E4;
+    --card: #FFFCF6;
+    --peach: #F2A461;
+    --peach-deep: #E88B3F;
+    --coral: #E2604A;
+    --brown: #5E3A22;
+    --brown-soft: #A2846A;
+    --line: #EFDFC4;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    background-image:
+      radial-gradient(circle at 10% 5%, rgba(242, 164, 97, 0.14), transparent 45%),
+      radial-gradient(circle at 92% 12%, rgba(226, 96, 74, 0.10), transparent 40%);
+    color: var(--brown);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+  }
+
+  .wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 20px 80px;
+  }
+
+  /* --- Header --- */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-bottom: 26px;
+    border-bottom: 3px dashed var(--line);
+    margin-bottom: 32px;
+  }
+
+  .mascota-slot {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--card);
+    border: 3px solid var(--peach);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    overflow: hidden;
+    box-shadow: 0 4px 0 rgba(226, 96, 74, 0.15);
+  }
+
+  .mascota-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+  }
+
+  .header-text { flex: 1; min-width: 0; }
+
+  .store-name {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 800;
+    font-size: clamp(30px, 6vw, 46px);
+    letter-spacing: -0.01em;
+    color: var(--peach-deep);
+    -webkit-text-stroke: 1px rgba(94, 58, 34, 0.15);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .store-name .accent { color: var(--coral); }
+
+  .store-sub {
+    font-family: 'Baloo 2', sans-serif;
+    color: var(--brown-soft);
+    font-size: 13px;
+    margin-top: 6px;
+    letter-spacing: 0.03em;
+  }
+
+  .open-sign {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: #fff;
+    background: var(--coral);
+    padding: 7px 14px;
+    border-radius: 999px;
+    box-shadow: 0 3px 0 #b8402d;
+  }
+
+  /* --- Saludo --- */
+  .saludo-card {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 18px;
+    padding: 18px 22px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 3px 0 var(--line);
+  }
+
+  .saludo-badge {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--peach-deep);
+    background: rgba(242, 164, 97, 0.15);
+    padding: 4px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+
+  #saludo-texto {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--brown);
+  }
+
+  /* --- Titulos de seccion --- */
+  .section-title {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--brown);
+    margin: 0 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background: var(--line);
+    border-radius: 2px;
+  }
+
+  /* --- Grid de productos --- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+
+  .tag {
+    position: relative;
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 3px 0 var(--line);
+  }
+
+  .tag-cat {
+    display: inline-block;
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--peach-deep);
+    background: rgba(242, 164, 97, 0.16);
+    padding: 3px 9px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .tag-nombre {
+    font-weight: 700;
+    font-size: 16px;
+    margin: 10px 0 8px;
+    color: var(--brown);
+  }
+
+  .tag-precio {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--coral);
+  }
+
+  .tag-stock {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--brown-soft);
+    font-weight: 600;
+  }
+
+  .stock-bar {
+    height: 6px;
+    border-radius: 4px;
+    background: var(--line);
+    margin-top: 4px;
+    overflow: hidden;
+  }
+  .stock-bar > div {
+    height: 100%;
+    background: var(--peach);
+    border-radius: 4px;
+  }
+
+  .tag-borrar {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: var(--cream);
+    border: none;
+    color: var(--brown-soft);
+    cursor: pointer;
+    font-size: 15px;
+    line-height: 1;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    transition: color 0.15s, background 0.15s;
+  }
+  .tag-borrar:hover {
+    color: #fff;
+    background: var(--coral);
+  }
+
+  .empty-state {
+    color: var(--brown-soft);
+    font-size: 14px;
+    padding: 26px;
+    text-align: center;
+    border: 2px dashed var(--line);
+    border-radius: 16px;
+    font-family: 'Baloo 2', sans-serif;
+  }
+
+  /* --- Formulario --- */
+  .receipt {
+    background: var(--card);
+    border: 2px solid var(--line);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 3px 0 var(--line);
+  }
+
+  .receipt form {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+  }
+
+  @media (max-width: 720px) {
+    .receipt form { grid-template-columns: 1fr 1fr; }
+  }
+
+  .receipt label {
+    display: block;
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--brown-soft);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .receipt input {
+    width: 100%;
+    background: var(--cream);
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    padding: 9px 12px;
+    color: var(--brown);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .receipt input:focus {
+    outline: none;
+    border-color: var(--peach);
+  }
+
+  .btn-add {
+    background: var(--coral);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 20px;
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #b8402d;
+    transition: transform 0.1s;
+  }
+  .btn-add:active { transform: translateY(2px); box-shadow: 0 1px 0 #b8402d; }
+
+  .form-error {
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 12px;
+    min-height: 16px;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--brown-soft);
+    font-size: 12px;
+    margin-top: 48px;
+    font-family: 'Baloo 2', sans-serif;
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="mascota-slot" id="mascota-slot">
+        <img id="mascota-img" src="/img/Logo.png" alt="Logo de Hikari Market" />
+        <span id="mascota-fallback">🍙</span>
+      </div>
+      <div class="header-text">
+        <p class="store-name">Hikari <span class="accent">Market</span></p>
+        <p class="store-sub">Panel de inventario</p>
+      </div>
+      <div class="open-sign">🍜 ABIERTO</div>
+    </header>
+
+    <div class="saludo-card">
+      <span class="saludo-badge"></span>
+      <span id="saludo-texto">Cargando...</span>
+    </div>
+
+    <p class="section-title">🍑 Gondola</p>
+    <div id="grid" class="grid">
+      <div class="empty-state">Cargando inventario...</div>
+    </div>
+
+    <p class="section-title">➕ Agregar producto</p>
+    <div class="receipt">
+      <form id="form-producto">
+        <div>
+          <label for="nombre">Producto</label>
+          <input id="nombre" name="nombre" type="text" placeholder="Ej: Gimbap de atun" required />
+        </div>
+        <div>
+          <label for="categoria">Categoria</label>
+          <input id="categoria" name="categoria" type="text" placeholder="Ej: Snacks" />
+        </div>
+        <div>
+          <label for="precio">Precio</label>
+          <input id="precio" name="precio" type="number" min="0" placeholder="1500" required />
+        </div>
+        <div>
+          <label for="stock">Stock</label>
+          <input id="stock" name="stock" type="number" min="0" placeholder="10" required />
+        </div>
+        <button type="submit" class="btn-add">Agregar</button>
+      </form>
+      <p class="form-error" id="form-error"></p>
+    </div>
+
+    <footer>Hikari Market · combini-inventario · localhost:3000</footer>
+  </div>
+
+<script>
+  const grid = document.getElementById('grid');
+  const saludoTexto = document.getElementById('saludo-texto');
+  const form = document.getElementById('form-producto');
+  const formError = document.getElementById('form-error');
+  const mascotaImg = document.getElementById('mascota-img');
+  const mascotaFallback = document.getElementById('mascota-fallback');
+
+  // Si existe public/img/Logo.png, se muestra. Si no, se queda el icono de reemplazo.
+  mascotaImg.addEventListener('load', () => {
+    mascotaImg.style.display = 'block';
+    mascotaFallback.style.display = 'none';
+  });
+  mascotaImg.addEventListener('error', () => {
+    mascotaImg.style.display = 'none';
+    mascotaFallback.style.display = 'block';
+  });
+
+  async function cargarSaludo() {
+    try {
+      const res = await fetch('/saludar');
+      const data = await res.json();
+      saludoTexto.textContent = data.saludo + ' Bienvenida a Hikari Market.';
+    } catch (e) {
+      saludoTexto.textContent = 'No se pudo contactar al servidor.';
+    }
+  }
+
+  function renderProductos(productos) {
+    if (!productos.length) {
+      grid.innerHTML = '<div class="empty-state">No hay productos en el inventario todavia.</div>';
+      return;
+    }
+    const maxStock = Math.max(...productos.map(p => p.stock), 1);
+    grid.innerHTML = productos.map(p => `
+      <div class="tag">
+        <button class="tag-borrar" title="Eliminar" data-id="${p.id}">&times;</button>
+        <span class="tag-cat">${p.categoria || 'Sin categoria'}</span>
+        <div class="tag-nombre">${p.nombre}</div>
+        <div class="tag-precio">$${Number(p.precio).toLocaleString('es-CL')}</div>
+        <div class="tag-stock">Stock: ${p.stock} u.</div>
+        <div class="stock-bar"><div style="width:${Math.round((p.stock / maxStock) * 100)}%"></div></div>
+      </div>
+    `).join('');
+
+    document.querySelectorAll('.tag-borrar').forEach(btn => {
+      btn.addEventListener('click', () => eliminarProducto(btn.dataset.id));
+    });
+  }
+
+  async function cargarInventario() {
+    try {
+      const res = await fetch('/inventario');
+      const productos = await res.json();
+      renderProductos(productos);
+    } catch (e) {
+      grid.innerHTML = '<div class="empty-state">No se pudo cargar el inventario.</div>';
+    }
+  }
+
+  async function eliminarProducto(id) {
+    await fetch(`/inventario/${id}`, { method: 'DELETE' });
+    cargarInventario();
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formError.textContent = '';
+
+    const body = {
+      nombre: document.getElementById('nombre').value.trim(),
+      categoria: document.getElementById('categoria').value.trim(),
+      precio: Number(document.getElementById('precio').value),
+      stock: Number(document.getElementById('stock').value)
+    };
+
+    const res = await fetch('/inventario', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      formError.textContent = err.error || 'No se pudo agregar el producto.';
+      return;
+    }
+
+    form.reset();
+    cargarInventario();
+  });
+
+  cargarSaludo();
+  cargarInventario();
+</script>
+</body>
+</html>
